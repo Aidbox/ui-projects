@@ -36,35 +36,64 @@ matcho:
 id: Chat
 resourceType: Entity
 isOpen: true
+type: resource
 ---
 id: ChatMessage
 resourceType: Entity
 isOpen: true
+type: resource
+
+# ---
+# id: Chat.participant
+# resourceType: Search
+# where: "{{table}}.resource @> '{\"participant\":[{\"id\":{{param}}}]}'"
+# name: participant
+# resource:
+#   id: Chat
+#   resourceType: Entity
+
+# ---
+# id: Chat.participant
+# resourceType: SearchParameter
+# resource:
+#   id: Chat
+#   resourceType: Entity
+# expression:
+#   - - participant
+# name: participant
+# type: reference
+
 ---
+
 id: dr-smith
-fullName: Dr. Smith
+
 resourceType: User
 password: dr-smith
-roleName: doctor
+data:
+  roleName: doctor
+  fullName: Dr. Smith
 ---
 id: dr-acorn
-fullName: Dr. Acorn
+
 resourceType: User
 password: dr-smith
-roleName: doctor
+data:
+  roleName: doctor
+  fullName: Dr. Acorn
 ---
 id: john-hurt
-fullName: John Hurt
 resourceType: User
 password: john-hurt
-roleName: patient
+data:
+  roleName: patient
+  fullName: John Hurt
 ---
 id: dave-pain
-fullName: Dave Pain
 resourceType: User
 password: dave-pain
-roleName: patient
-
+data:
+  roleName: patient
+  fullName: Dave Pain
 ---
 id: chat-1
 resourceType: Chat
