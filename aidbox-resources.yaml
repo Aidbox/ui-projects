@@ -1,3 +1,12 @@
+id: public-ui-chat
+resourceType: AccessPolicy
+engine: matcho
+matcho:
+  uri:
+    $one-of:
+    - "#/ui/chat/.+"
+    - "/ui/chat"
+---
 id: public-ui-auth
 resourceType: AccessPolicy
 engine: matcho

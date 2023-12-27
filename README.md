@@ -15,3 +15,9 @@ npm run dev
 # Deploy
 
 1. Get Aidbox 
+
+
+
+# todo
+
+- [ ] don't sync `.test.js` files in routes directory

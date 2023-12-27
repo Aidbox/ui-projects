@@ -170,6 +170,8 @@ async function syncAidboxResources() {
       {headers: {"Authorization": "Basic cm9vdDpzZWNyZXQ="}}
     )
 
+    console.log(`Aidbox resource saved. ${resToRefString(res)}`)
+
   })
 
 }

@@ -67,6 +67,5 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
             {:style "background-color: #0093E9"}
             "Sign out"]]]]]
 
-       [:div.text-gray-200.mx-auto.pt-2
-        (format "Aidbox version %s" (box/version))]]
+       [:div.text-gray-200.mx-auto.pt-2 (format "Aidbox version %s" (box/version))]]
       ])])

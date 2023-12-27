@@ -4,12 +4,14 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "dev": "nodemon --watch routes --watch sync.js -e clj,html,css,js sync.js"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
+    "vitest": "^1.1.0",
     "axios": "^1.6.2",
     "js-yaml": "^4.1.0"
   }
