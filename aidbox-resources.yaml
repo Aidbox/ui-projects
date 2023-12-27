@@ -30,3 +30,112 @@ matcho:
   user:
     role: audit-officer
   uri: "#/ui/audit-officer/.+"
+
+---
+
+id: Chat
+resourceType: Entity
+isOpen: true
+---
+id: ChatMessage
+resourceType: Entity
+isOpen: true
+---
+id: dr-smith
+fullName: Dr. Smith
+resourceType: User
+password: dr-smith
+roleName: doctor
+---
+id: dr-acorn
+fullName: Dr. Acorn
+resourceType: User
+password: dr-smith
+roleName: doctor
+---
+id: john-hurt
+fullName: John Hurt
+resourceType: User
+password: john-hurt
+roleName: patient
+---
+id: dave-pain
+fullName: Dave Pain
+resourceType: User
+password: dave-pain
+roleName: patient
+
+---
+id: chat-1
+resourceType: Chat
+participants:
+  - id: dr-smith
+    resourceType: User
+  - id: john-hurt
+    resourceType: User
+---
+id: chat-2
+resourceType: Chat
+participants:
+  - id: dr-smith
+    resourceType: User
+  - id: dave-pain
+    resourceType: User
+
+---
+id: chat-3
+resourceType: Chat
+participants:
+  - id: dr-acorn
+    resourceType: User
+  - id: john-hurt
+    resourceType: User
+
+---
+id: msg-1
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: john-smith, resourceType: User}
+message: ' Good morning, doctor. Can I come in?'
+---
+id: msg-2
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: null, resourceType: User}
+message: ' Good morning. How are you feeling today? You seem a bit under the weather.'
+---
+id: msg-3
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: john-smith, resourceType: User}
+message: ' Indeed, doctor. I’ve been feeling unwell for a few days. I have a headache, a runny nose, and a sore throat.'
+---
+id: msg-4
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: null, resourceType: User}
+message: ' I see. Let''s check your temperature and throat. Have you been in contact with anyone who is sick?'
+---
+id: msg-5
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: john-smith, resourceType: User}
+message: ' Not that I’m aware of, doctor.'
+---
+id: msg-6
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: null, resourceType: User}
+message: ' Well, it seems like you have a flu. It''s important that you rest, hydrate and take the prescribed medication. Also, avoid contact with others to prevent spreading the virus.'
+---
+id: msg-7
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: john-smith, resourceType: User}
+message: ' I will do as you say, doctor. Thank you for your advice.'
+---
+id: msg-8
+resourceType: Chat
+chat: {id: chat-1, resourceType: Chat}
+user: {id: null, resourceType: User}
+message: ' You''re welcome. Get well soon.'
