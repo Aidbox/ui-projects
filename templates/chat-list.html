@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+
+<body>
+    <section class="p-4">
+        <div class="relative flex items-center space-x-4">
+            <div class="relative">
+                <span class="absolute text-green-500 right-0 bottom-0">
+                    <svg width="20" height="20">
+                        <circle cx="8" cy="8" r="8" fill="currentColor"></circle>
+                    </svg>
+                </span>
+                <img src="https://img.freepik.com/free-psd/3d-illustration-bald-person-with-glasses_23-2149436184.jpg?w=2000&t=st=1703687163~exp=1703687763~hmac=5f8ba9896ce6414e3239571fa62bd702c7491504f29000cf6544821817eca59e"
+                    alt="" class="w-10 sm:w-16 h-10 sm:h-16 rounded-full">
+            </div>
+            <div class="flex flex-col leading-tight">
+                <div class="text-2xl mt-1 flex items-center">
+                    <span class="text-gray-700 mr-3">John Doe</span>
+                </div>
+                <span class="text-lg text-gray-600">Just a good guy</span>
+            </div>
+        </div>
+
+        <div class="flex flex-col w-2/5 overflow-y-auto">
+            <div class="border-b-2 py-4 px-2">
+                <input type="text" placeholder="search chatting"
+                    class="py-2 px-2 border-2 border-gray-200 rounded-md w-full" />
+            </div>
+            <div class="flex flex-row gap-x-4 py-4 px-2 justify-center items-center border-b-2">
+                <img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43"
+                    class="object-cover h-12 w-12 rounded-full" alt="" />
+                <div class="w-full">
+                    <div class="text-lg font-semibold">Dr. Smith</div>
+                    <span class="text-gray-500">Pick me at 9:00 Am</span>
+                </div>
+            </div>
+            <div class="flex flex-row gap-x-4 py-4 px-2 items-center border-b-2">
+                <img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43"
+                    class="object-cover h-12 w-12 rounded-full" alt="" />
+                <div class="w-full">
+                    <div class="text-lg font-semibold">Dr.Sam</div>
+                    <span class="text-gray-500">Hi Sam, Welcome</span>
+                </div>
+            </div>
+            <div class="flex flex-row gap-x-4 py-4 px-2 items-center border-b-2 border-l-4 border-blue-400">
+                <img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43"
+                    class="object-cover h-12 w-12 rounded-full" alt="" />
+                <div class="w-full">
+                    <div class="text-lg font-semibold">Conference</div>
+                    <span class="text-gray-500">Lusi : Thanks Everyone</span>
+                </div>
+            </div>
+            <div class="flex flex-row  gap-x-4 py-4 px-2 items-center border-b-2">
+                <img src="https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43"
+                    class="object-cover h-12 w-12 rounded-full" alt="" />
+                <div class="w-full">
+                    <div class="text-lg font-semibold">Dr. Evan</div>
+                    <span class="text-gray-500">Evan : how are you</span>
+                </div>
+            </div>
+            <!-- end user list -->
+        </div>
+    </section>
+</body>
+
+</html>
