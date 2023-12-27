@@ -1,0 +1,23 @@
+id: public-ui-auth
+resourceType: AccessPolicy
+engine: matcho
+matcho:
+  uri: "#/ui/auth/.+"
+---
+id: public-ui-index
+resourceType: AccessPolicy
+engine: matcho
+matcho:
+  uri:
+    $one-of:
+      - "/"
+      - "/ui/$dev-mode"
+      - "/Operation/$changes"
+---
+id: audit-ui
+resourceType: AccessPolicy
+engine: matcho
+matcho:
+  user:
+    role: audit-officer
+  uri: "#/ui/audit-officer/.+"
