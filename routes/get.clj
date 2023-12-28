@@ -3,7 +3,7 @@
 
 
  [:ul
-  [:li [:a {:href "/ui/auth/userifno"} "Auth UI"]]
+  [:li [:a {:href "/ui/auth/userinfo"} "Auth UI"]]
   [:li [:a {:href "/ui/patients"} "Patient CRUD"]]
   [:li [:a {:href "/ui/chat"} "Chat App"]]
   [:li [:a {:href "/ui/forms/responses"} "Aidbox Forms"]]]
