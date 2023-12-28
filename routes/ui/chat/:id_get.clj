@@ -1,11 +1,52 @@
 (if (nil? (auth/user-info))
-  (box/redirect "/ui/chat/login")
+  (box/redirect "/ui/auth/login")
 
   [:html
    [:meta {:charset "UTF-8"}]
-   [:meta
-    {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
-   [:title "Chat"]
+   [:meta {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
+   [:title "Chat App"]
+
+   #_[:script {:src "https://cdn.tailwindcss.com"}]
+
+   [:script {:type "module" :src "https://unpkg.com/@hotwired/turbo@7.3.0/dist/turbo.es2017-esm.js"}]
+   [:script {:src "/ui/$dev-mode"}]
+
+   [:div "User: " (:id (auth/user-info))
+      [:form {:method "POST" :action "/ui/auth/logout"
+              :style "display: inline; margin-left: 8px"}
+       [:input {:type "hidden" :name "_csrf" :value (auth/csrf)}]
+       [:button "Sign out"]]
+      [:hr]]
+
+   [:div "id: " (:id (box/route-params))]
+
+   [:h1 "Chat"]
+
+   (let [messages (map :resource (box/sql ["select resource || jsonb_build_object('id', id) resource from chatmessage where resource#>>'{chat,id}' = ?" (:id (box/route-params))]))]
+     [:turbo-frame {:id "chat"}
+      (for [msg messages]
+        [:div [:span {:style "font-weight: bold;"} (:id (auth/user-info)) ": "]
+         (:message msg)])])
+
+   [:turbo-frame {:id "chat-form"}
+    [:form {:action (format "/ui/chat/%s/$send-message" (:id (box/route-params))) :method "post"}
+     #_[:input {:name "chat-id" :type "hidden" :value (:id (box/route-params))}]
+     [:input {:name "message"}]
+     [:button "Send"]]]
+
+   [:div
+    [:hr]
+    [:div {:style "font-family: monospace"} (format "Aidbox version %s" (box/version))]]
+   ])
+
+#_(if (nil? (auth/user-info))
+  (box/redirect "/ui/auth/login")
+
+  [:html
+   [:meta {:charset "UTF-8"}]
+   [:meta {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
+   [:title "Chat..."]
+
    [:script {:src "https://cdn.tailwindcss.com"}]
 
    [:script {:type "module" :src "https://unpkg.com/@hotwired/turbo@7.3.0/dist/turbo.es2017-esm.js"}]
@@ -15,6 +56,7 @@
     [:div
      {:class
       "flex sm:items-center justify-between py-3 border-b-2 border-gray-200"}
+
      [:div
       {:class "relative flex items-center space-x-4"}
       [:div
@@ -35,6 +77,7 @@
         {:class "text-2xl mt-1 flex items-center"}
         [:span {:class "text-gray-700 mr-3"} "Dr. Smith"]]
        [:span {:class "text-lg text-gray-600"} "Therapist"]]]
+
      [:div
       {:class "flex items-center space-x-2"}
       [:button
@@ -360,32 +403,8 @@
          [:path
           {:d
            "M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z"}]]]]]]]
+
    [:style
     ".scrollbar-w-2::-webkit-scrollbar {\n            width: 0.25rem;\n            height: 0.25rem;\n        }\n\n        .scrollbar-track-blue-lighter::-webkit-scrollbar-track {\n            --bg-opacity: 1;\n            background-color: #f7fafc;\n            background-color: rgba(247, 250, 252, var(--bg-opacity));\n        }\n\n        .scrollbar-thumb-blue::-webkit-scrollbar-thumb {\n            --bg-opacity: 1;\n            background-color: #edf2f7;\n            background-color: rgba(237, 242, 247, var(--bg-opacity));\n        }\n\n        .scrollbar-thumb-rounded::-webkit-scrollbar-thumb {\n            border-radius: 0.25rem;\n        }"]
    [:script
     "const el = document.getElementById('messages')\n        el.scrollTop = el.scrollHeight"]])
-
-
-#_[:html
-   #_[:script {:type "module"}
-      "import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';"]
-
-   [:script {:type "module" :src "https://unpkg.com/@hotwired/turbo@7.3.0/dist/turbo.es2017-esm.js"}]
-
-   [:script {:src "/ui/$dev-mode"}]
-
-
-   [:form {:method "POST" :action "/ui/chat/logout"}
-    [:input {:type "hidden" :name "_csrf" :value (auth/csrf)}]
-    [:button "Sign out"]]
-
-   [:div "chat"]
-
-   [:turbo-frame {:id "chat"}
-    [:div "message"]]
-
-   [:turbo-frame {:id "chat-form"}
-    [:form {:action "/ui/chat/$send-message" :method "post"}
-     [:button "Generate new message"]]]
-
-   ]

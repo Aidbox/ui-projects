@@ -2,6 +2,18 @@ id: public-ui-chat
 resourceType: AccessPolicy
 engine: matcho
 matcho:
+  request-method: get
+  uri:
+    $one-of:
+    - "#/ui/chat/.+"
+    - "/ui/chat"
+---
+id: ui-chat-user-action
+resourceType: AccessPolicy
+engine: matcho
+matcho:
+  user:
+    id: present?
   uri:
     $one-of:
     - "#/ui/chat/.+"
