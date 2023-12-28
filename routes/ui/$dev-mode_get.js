@@ -103,7 +103,7 @@ function debugButton() {
     button.onclick = () => showDebugOverlay();
     button.innerHTML = "DEBUG"
     button.style.cssText = `
-position: absolute;
+position: fixed;
 bottom: 0; right: 0;
 background-color: rgba(124,0,124,0.3);
 padding: 5px 10px`;

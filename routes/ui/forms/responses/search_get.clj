@@ -70,9 +70,10 @@ where q.resource::text ilike ?" (str "%" (:query params) "%")])
                         (get-in f [:resource :subject :name 0 :family]))
                    ]]]
                 [:div
-                 {:class "bg-white border-b  px-4 py-4 text-sm whitespace-nowrap cursor-pointer text-blue-500"}
+                 {:data-turbo "false"
+                  :class "bg-white border-b  px-4 py-4 text-sm whitespace-nowrap cursor-pointer text-blue-500"}
                  [:a {:class "px-3 py-2 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100"
-
+                      :data-turbo "false"
                       :href (str "/ui/sdc#/questionnaire-response/" (get-in f [:resource :id]))}
                   "Open"
                   ]]])
