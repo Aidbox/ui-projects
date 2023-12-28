@@ -9,7 +9,7 @@
    #_[:script {:src "https://cdn.tailwindcss.com"}]
 
    [:script {:type "module" :src "https://unpkg.com/@hotwired/turbo@7.3.0/dist/turbo.es2017-esm.js"}]
-   [:script {:src "/ui/$dev-mode"}]
+   #_[:script {:src "/ui/$dev-mode"}]
 
    [:div "User: " (:id (auth/user-info))
       [:form {:method "POST" :action "/ui/auth/logout"
@@ -22,17 +22,21 @@
 
    [:h1 "Chat"]
 
-   (let [messages (map :resource (box/sql ["select resource || jsonb_build_object('id', id) resource from chatmessage where resource#>>'{chat,id}' = ?" (:id (box/route-params))]))]
-     [:turbo-frame {:id "chat"}
-      (for [msg messages]
-        [:div [:span {:style "font-weight: bold;"} (:id (auth/user-info)) ": "]
-         (:message msg)])])
+   [:turbo-stream-source {:src (format "/ui/chat/%s/$subscribe" (:id (box/route-params)))}]
 
    [:turbo-frame {:id "chat-form"}
     [:form {:action (format "/ui/chat/%s/$send-message" (:id (box/route-params))) :method "post"}
      #_[:input {:name "chat-id" :type "hidden" :value (:id (box/route-params))}]
      [:input {:name "message"}]
      [:button "Send"]]]
+
+   (let [messages (map :resource (box/sql ["select resource || jsonb_build_object('id', id) resource from chatmessage where resource#>>'{chat,id}' = ?" (:id (box/route-params))]))]
+     [:turbo-frame {:id "chat"}
+      (for [msg (reverse messages)]
+        [:div [:span {:style "font-weight: bold;"} (get-in msg [:author :id]) ": "]
+         (:message msg)])])
+
+
 
    [:div
     [:hr]

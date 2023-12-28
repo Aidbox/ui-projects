@@ -8,18 +8,19 @@
              :author {:id (:id (auth/user-info)) :resourceType "User"}
              :message (:message (box/form-params))})
 
-[:<>
+(turbo/send
 
- [:turbo-stream {:action "append" :target "chat"}
+ (format "Chat/%s" (:id (box/route-params)))
+
+ [:turbo-stream {:action "prepend" :target "chat"}
   [:template
    [:div [:span {:style "font-weight: bold;"} (:id (auth/user-info)) ": "]
-    (:message (box/form-params))]]]
+    (:message (box/form-params))]]])
 
+[:<>
  [:turbo-stream {:action "replace" :target "chat-form"}
   [:template
    [:turbo-frame {:id "chat-form"}
-    [:form {:action "/ui/chat/$send-message" :method "post"}
+    [:form {:action (format "/ui/chat/%s/$send-message" (:id (box/route-params))) :method "post"}
      [:input {:name "message"}]
-     [:button "Send"]]]]]
-
- ]
+     [:button "Send"]]]]]]
