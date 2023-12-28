@@ -19,7 +19,6 @@ jobs:
           node-version: 20
       - run: npm ci
       - run: |
-          printenv
           node sync.mjs
         env:
           AIDBOX_URL: ${{ vars.AIDBOX_STAGE_URL }}
