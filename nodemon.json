@@ -1,5 +1,13 @@
 {
-    "events": {
-      "start": "clear"
-    }
+  "watch": [
+    "routes",
+    "sync.mjs",
+    "aidbox-resources.yaml"
+  ],
+  "legacyWatch": "true",
+  "ext": "yaml,clj,html,css,js",
+  "exec": "node sync.mjs",
+  "events": {
+    "start": "clear"
+  }
 }

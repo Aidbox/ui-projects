@@ -3,16 +3,19 @@
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
+  "type": "module",
   "scripts": {
     "test": "vitest",
-    "dev": "nodemon --watch routes --watch sync.js -e clj,html,css,js sync.js"
+    "dev": "nodemon"
   },
   "author": "",
   "license": "ISC",
-  "dependencies": {},
   "devDependencies": {
-    "vitest": "^1.1.0",
     "axios": "^1.6.2",
-    "js-yaml": "^4.1.0"
+    "dotenv": "^16.3.1",
+    "js-yaml": "^4.1.0",
+    "nodemon": "^3.0.2",
+    "vite": "^5.0.10",
+    "vitest": "^1.1.0"
   }
 }

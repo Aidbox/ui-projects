@@ -1,0 +1,36 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - "main"
+  workflow_dispatch:
+
+jobs:
+  test-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+      - run: npm ci
+      - run: |
+          node sync.mjs
+        env:
+          AIDBOX_URL: ${{ vars.AIDBOX_STAGE_URL }}
+          AIDBOX_USER: ${{ vars.AIDBOX_STAGE_USERNAME }}
+          AIDBOX_PASSWORD: ${{ vars.AIDBOX_STAGE_PASSWORD }}
+
+      - run: npm run test
+        env:
+          AIDBOX_URL: ${{ vars.AIDBOX_STAGE_URL }}
+          AIDBOX_USER: ${{ vars.AIDBOX_STAGE_USERNAME }}
+          AIDBOX_PASSWORD: ${{ vars.AIDBOX_STAGE_PASSWORD }}
+      - run: node sync.mjs
+        env:
+          AIDBOX_URL: ${{ vars.AIDBOX_PROD_URL }}
+          AIDBOX_USER: ${{ vars.AIDBOX_PROD_USERNAME }}
+          AIDBOX_PASSWORD: ${{ vars.AIDBOX_PROD_PASSWORD }}
