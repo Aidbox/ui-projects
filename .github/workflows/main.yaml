@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  publish-gpr:
+  test-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -18,7 +18,9 @@ jobs:
         with:
           node-version: 20
       - run: npm ci
-      - run: node sync.mjs
+      - run: |
+          printenv
+          node sync.mjs
         env:
           AIDBOX_URL: ${{ vars.AIDBOX_STAGE_URL }}
           AIDBOX_USER: ${{ vars.AIDBOX_STAGE_USERNAME }}

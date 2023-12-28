@@ -49,7 +49,7 @@ function getContentTypeByExt(ext) {
 function buildOperationResource(filepath) {
   const [_, ...splited] = filepath.split(/[\/\._]/);
   const method = splited.slice(-2)[0];
-  console.log(filepath);
+
   const route = splited.slice(0, -2).map(route_path => {
     if (route_path[0] === ':')
       return { name: route_path.slice(1) }
@@ -106,7 +106,6 @@ async function getSeedImport(client) {
       '/SeedImport/aidbox-ui');
     return resp.data.resources;
   } catch (e) {
-    console.log(e);
     if (e.response.status === 404)
       return []
     else
