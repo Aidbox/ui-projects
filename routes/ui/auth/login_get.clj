@@ -57,7 +57,15 @@ background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
         [:button.py-2.px-4.text-white.rounded.w-full
           {:style "background-color: #0093E9"}
           "Sign in"]
+
+        [:a {:href "/auth/redirect/google"} "Login with Google"]
+
+        #_[:button.py-2.px-4.text-white.rounded.w-full
+          {:style "background-color: #0093E9"}
+          "Sign in"]
+
         ]
+
 
        [:div.px-8
 

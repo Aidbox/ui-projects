@@ -32,13 +32,15 @@
      [:input {:name "message"}]
      [:button "Send"]]]
 
-   [:a {:href "/ui/chat"} "Back to chats"]
+
 
    (let [messages (map :resource (box/sql ["select resource || jsonb_build_object('id', id) resource from chatmessage where resource#>>'{chat,id}' = ?" (:id (box/route-params))]))]
      [:turbo-frame {:id "chat"}
       (for [msg (reverse messages)]
         [:div [:span {:style "font-weight: bold;"} (get-in msg [:author :id]) ": "]
          (:message msg)])])
+
+   [:a {:href "/ui/chat"} "Back to chats"]
 
    [:div
     [:hr]
