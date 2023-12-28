@@ -12,6 +12,18 @@
 npm run dev
 ```
 
+# Development
+
+
+Aidbox uses sci language (minified Clojure). [sci API](https://github.com/babashka/sci/blob/master/API.md) is fully available.
+
+In order to get access to Aidbox functions see [API.md](API.md).
+
+
+
+
+
+
 # Deploy
 
 1. Get Aidbox 
