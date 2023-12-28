@@ -1,14 +1,70 @@
 (if (nil? (auth/user-info))
-  (box/redirect "/ui/chat/login")
+  (box/redirect "/ui/auth/login")
 
-  (let [chats (box/sql ["select * from chat where resource @> jsonb_build_object('participants', jsonb_build_array(jsonb_build_object('id', ?::text)))" (:id (auth/user-info))])]
+  (let [chats (map :resource
+                   (box/sql "select resource || jsonb_build_object('id', id) as resource from chat")
+                   #_(box/sql ["
+select resource || jsonb_build_object('id', id, 'last_message', (
+select resource
+from chatmessage cm
+where resource#>>'{chat,id}' = chat.id
+order by cm.cts desc
+limit 1
+)) as resource
+from chat
+where resource @> jsonb_build_object('participants', jsonb_build_array(jsonb_build_object('id', ?::text)))
+"
+                             (:id (auth/user-info))]))]
+
+    [:html
+     [:meta {:charset "UTF-8"}]
+     [:meta {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
+     [:title "Chat App"]
+     [:script {:type "module" :src "https://unpkg.com/@hotwired/turbo@7.3.0/dist/turbo.es2017-esm.js"}]
+     [:script {:src "/ui/$dev-mode"}]
+
+     [:div "User: " (:id (auth/user-info))
+
+      [:form {:method "POST" :action "/ui/auth/logout"
+              :style "display: inline; margin-left: 8px"}
+       [:input {:type "hidden" :name "_csrf" :value (auth/csrf)}]
+       [:button "Sign out"]]
+      [:hr]]
+
+     [:h1 "List of chats"]
+
+     [:div {:style "margin-bottom: 8px"}
+      (for [chat chats]
+        [:div
+         [:a {:href (str "/ui/chat/" (:id chat))}
+          (:id chat)]
+         (when (= (:id (auth/user-info)) (get-in chat [:participants 0 :id]))
+           [:span {:style "color: gray; margin-left: 4px"} "author"])])]
+
+     [:div
+      "Total: " (count chats)
+
+      [:form {:method "POST" :action "/ui/chat/$new"
+              :style "display: inline; margin-left: 8px"}
+       [:input {:type "hidden" :name "_csrf" :value (auth/csrf)}]
+       [:button "Create new chat"]]]
+
+
+     [:div
+      [:hr]
+
+      #_
+      (count (box/sql "select * from chat"))
+
+      [:div {:style "font-family: monospace"} (format "Aidbox version %s" (box/version))]]
+     ]
 
     #_[:div
      [:div "Chats of " (:id (auth/user-info))]
      (for [chat chats]
        [:div (str chat)])]
 
-    [:html
+    #_[:html
      [:meta {:charset "UTF-8"}]
      [:meta
       {:name "viewport", :content "width=device-width, initial-scale=1.0"}]
@@ -44,52 +100,20 @@
          {:type "text",
           :placeholder "search chatting",
           :class "py-2 px-2 border-2 border-gray-200 rounded-md w-full"}]]
-       [:div
-        {:class
-         "flex flex-row gap-x-4 py-4 px-2 justify-center items-center border-b-2"}
-        [:img
-         {:src
-          "https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43",
-          :class "object-cover h-12 w-12 rounded-full",
-          :alt ""}]
-        [:div
-         {:class "w-full"}
-         [:div {:class "text-lg font-semibold"} "Dr. Smith"]
-         [:span {:class "text-gray-500"} "Pick me at 9:00 Am"]]]
-       [:div
-        {:class "flex flex-row gap-x-4 py-4 px-2 items-center border-b-2"}
-        [:img
-         {:src
-          "https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43",
-          :class "object-cover h-12 w-12 rounded-full",
-          :alt ""}]
-        [:div
-         {:class "w-full"}
-         [:div {:class "text-lg font-semibold"} "Dr.Sam"]
-         [:span {:class "text-gray-500"} "Hi Sam, Welcome"]]]
-       [:div
-        {:class
-         "flex flex-row gap-x-4 py-4 px-2 items-center border-b-2 border-l-4 border-blue-400"}
-        [:img
-         {:src
-          "https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43",
-          :class "object-cover h-12 w-12 rounded-full",
-          :alt ""}]
-        [:div
-         {:class "w-full"}
-         [:div {:class "text-lg font-semibold"} "Conference"]
-         [:span {:class "text-gray-500"} "Lusi : Thanks Everyone"]]]
-       [:div
-        {:class "flex flex-row  gap-x-4 py-4 px-2 items-center border-b-2"}
-        [:img
-         {:src
-          "https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43",
-          :class "object-cover h-12 w-12 rounded-full",
-          :alt ""}]
-        [:div
-         {:class "w-full"}
-         [:div {:class "text-lg font-semibold"} "Dr. Evan"]
-         [:span {:class "text-gray-500"} "Evan : how are you"]]]]]]))
+
+       (for [chat chats]
+         [:a {:href (str "/ui/chat/" (:id chat))}
+          [:div
+           {:class
+            "flex flex-row gap-x-4 py-4 px-2 justify-center items-center border-b-2"}
+           [:img
+            {:src "https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?w=2000&t=st=1703687025~exp=1703687625~hmac=5a40b340cfd14b400ae9c4f6f5bbecdfb938433746080070beb172eec7606c43",
+             :class "object-cover h-12 w-12 rounded-full",
+             :alt ""}]
+           [:div
+            {:class "w-full"}
+            [:div {:class "text-lg font-semibold"} "Chat with " "Dr. Smith"]
+            [:span {:class "text-gray-500"} "Headache"]]]])]]]))
 
 
 #_[:html
@@ -101,7 +125,7 @@
    [:script {:src "/ui/$dev-mode"}]
 
 
-   [:form {:method "POST" :action "/ui/chat/logout"}
+   [:form {:method "POST" :action "/ui/auth/logout"}
     [:input {:type "hidden" :name "_csrf" :value (auth/csrf)}]
     [:button "Sign out"]]
 

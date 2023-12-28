@@ -12,6 +12,18 @@
 npm run dev
 ```
 
+# Development
+
+
+Aidbox uses sci language (minified Clojure). [sci API](https://github.com/babashka/sci/blob/master/API.md) is fully available.
+
+In order to get access to Aidbox functions see [API.md](API.md).
+
+
+
+
+
+
 # Deploy
 
 1. Get Aidbox 
@@ -21,3 +33,31 @@ npm run dev
 # todo
 
 - [ ] don't sync `.test.js` files in routes directory
+
+
+
+```clojure
+[:html
+   #_[:script {:type "module"}
+      "import hotwiredTurbo from 'https://cdn.skypack.dev/@hotwired/turbo';"]
+
+   [:script {:type "module" :src "https://unpkg.com/@hotwired/turbo@7.3.0/dist/turbo.es2017-esm.js"}]
+
+   [:script {:src "/ui/$dev-mode"}]
+
+
+   [:form {:method "POST" :action "/ui/auth/logout"}
+    [:input {:type "hidden" :name "_csrf" :value (auth/csrf)}]
+    [:button "Sign out"]]
+
+   [:div "chat"]
+
+   [:turbo-frame {:id "chat"}
+    [:div "message"]]
+
+   [:turbo-frame {:id "chat-form"}
+    [:form {:action "/ui/chat/$send-message" :method "post"}
+     [:button "Generate new message"]]]
+
+   ]
+```
