@@ -23,13 +23,17 @@ id: ui-user-actions
 resourceType: AccessPolicy
 engine: matcho
 matcho:
-  user:
-    id: present?
   uri:
     $one-of:
       - '#/ui/patients/.+'
       - /ui/patients
       - '#/ui/forms/.+'
+      - '#/fhir/Questionnaire.+'
+      - '#/fhir/QuestionnaireResponse.+'
+      - '#/Questionnaire.+'
+      - '#/QuestionnaireResponse.+'
+  user:
+    id: present?
 ---
 id: public-ui-auth
 resourceType: AccessPolicy
