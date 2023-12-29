@@ -19,6 +19,18 @@ matcho:
     - "#/ui/chat/.+"
     - "/ui/chat"
 ---
+id: ui-user-actions
+resourceType: AccessPolicy
+engine: matcho
+matcho:
+  user:
+    id: present?
+  uri:
+    $one-of:
+      - '#/ui/patients/.+'
+      - /ui/patients
+      - '#/ui/forms/.+'
+---
 id: public-ui-auth
 resourceType: AccessPolicy
 engine: matcho
@@ -67,5 +79,3 @@ password: dr-acorn
 data:
   roleName: doctor
   fullName: Dr. Acorn
-
-
