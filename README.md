@@ -79,7 +79,7 @@ X-Aidbox-Dev: model
 
 {"patients": [
 	{"id": "patient-1"},
-	,,,
+	...
 	{"id": "patient-100"}
 ]}
 
