@@ -8,7 +8,8 @@
                        :birthDate (get-in params [:birth-date])}
                 (:id params)
                 (assoc :id (:id params)))
-      saved-patient (box/create patient)]
+      saved-patient (box/create patient)
+      _ (m/set :saved-patient saved-patient)]
 
   (if (= (:resourceType saved-patient) "Patient")
     [:<>

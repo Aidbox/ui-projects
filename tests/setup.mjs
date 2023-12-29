@@ -21,7 +21,8 @@ async function http(opts) {
     {
       url: opts.url,
       method: opts.method ?? 'get',
-      data: opts.body
+      data: opts.body,
+      headers: opts.headers,
     }
   ).then(resp => resp.data);
 }

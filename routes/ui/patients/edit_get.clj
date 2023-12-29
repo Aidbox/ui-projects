@@ -2,7 +2,9 @@
 
 (let [params (box/url-params)
       patient (when (:patient-id params)
-                (box/read {:id (:patient-id params) :resourceType "Patient"}))]
+                (box/read {:id (:patient-id params) :resourceType "Patient"}))
+      _ (m/set :patient patient)
+      ]
   [:turbo-stream {:target "modal"
                   :action "update"}
    [:template
